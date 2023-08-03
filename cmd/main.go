@@ -5,10 +5,14 @@ import (
 
 	"github.com/AhmAlgiz/marketplace"
 	"github.com/AhmAlgiz/marketplace/pkg/handler"
+	"github.com/AhmAlgiz/marketplace/pkg/repository"
+	"github.com/AhmAlgiz/marketplace/pkg/service"
 )
 
 func main() {
-	handlers := new(handler.Handler)
+	repos := repository.NewRepository()
+	services := service.NewService(repos)
+	handlers := handler.NewHandler(services)
 
 	s := new(marketplace.Server)
 	if err := s.Run("8000", handlers.InitRoutes()); err != nil {
