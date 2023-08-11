@@ -19,13 +19,13 @@ func main() {
 	handlers := handler.NewHandler(services)
 
 	s := new(marketplace.Server)
-	if err := s.Run(viper.GetString("8000"), handlers.InitRoutes()); err != nil {
+	if err := s.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 		log.Fatalf("Server running error: %s", err.Error())
 	}
 }
 
 func initConfig() error {
-	viper.AddConfigPath("../configs")
+	viper.AddConfigPath("configs")
 	viper.SetConfigName("config")
 	return viper.ReadInConfig()
 }
