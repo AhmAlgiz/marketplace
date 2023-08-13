@@ -1,8 +1,12 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/AhmAlgiz/marketplace/structures"
+	"github.com/gin-gonic/gin"
+)
 
 func (h *Handler) singUp(c *gin.Context) {
+	var newUser structures.User
 
 }
 

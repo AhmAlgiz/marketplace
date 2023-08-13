@@ -1,4 +1,4 @@
-package marketplace
+package structures
 
 type Item struct {
 	Id          int    `json:"id"`
