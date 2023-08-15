@@ -1,0 +1,6 @@
+ALTER TABLE users
+RENAME COLUMN username TO name;
+
+ALTER TABLE users 
+AlTER COLUMN name
+DROP UNIQUE;

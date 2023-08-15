@@ -1,7 +1,7 @@
 package structures
 
 type User struct {
-	Id   int    `json:"id"`
-	Name string `json:"name" binding:"required"`
-	Pass string `json:"pass" binding:"required"`
+	Id   int    `json:"id" db:"id"`
+	Name string `json:"username" binding:"required" db:"username"`
+	Pass string `json:"pass" binding:"required" db:"pass_hash"`
 }

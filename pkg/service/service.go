@@ -7,6 +7,7 @@ import (
 
 type Auth interface {
 	CreateUser(user structures.User) (int, error)
+	GenerateToken(username, password string) (string, error)
 }
 
 type Item interface {

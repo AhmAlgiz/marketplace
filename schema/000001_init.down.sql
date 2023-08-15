@@ -1,3 +1,3 @@
-DROP TABLE items;
+DROP TABLE IF EXISTS items;
 
-DROP TABLE users;
+DROP TABLE IF EXISTS users;
