@@ -11,6 +11,7 @@ type Auth interface {
 }
 
 type Item interface {
+	CreateItem(input structures.Item) (int, error)
 }
 
 type Repository struct {
@@ -21,5 +22,6 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Auth: NewAuthPostgres(db),
+		Item: NewItemPostgres(db),
 	}
 }

@@ -1,0 +1,5 @@
+ALTER TABLE items
+DROP COLUMN price;
+
+ALTER TABLE items
+ADD COLUMN price MONEY NOT NULL;

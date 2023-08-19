@@ -2,12 +2,8 @@ package structures
 
 type Item struct {
 	Id          int    `json:"id"`
-	Title       string `json:"title"`
+	Title       string `json:"title" binding:"required"`
 	Description string `json:"description"`
 	Price       int    `json:"price"`
-}
-
-type UsersItem struct {
-	Id     int
-	UserId int
+	UserId      int    `json:"user_id"`
 }

@@ -12,6 +12,7 @@ type Auth interface {
 }
 
 type Item interface {
+	CreateItem(item structures.Item) (int, error)
 }
 
 type Service struct {
@@ -22,5 +23,6 @@ type Service struct {
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Auth: NewAuthService(repos.Auth),
+		Item: NewItemService(repos.Item),
 	}
 }
