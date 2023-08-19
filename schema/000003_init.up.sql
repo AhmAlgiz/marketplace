@@ -1,5 +1,12 @@
 ALTER TABLE items
+ADD COLUMN price_integer INTEGER;
+UPDATE items SET price_integer = CAST(price::NUMERIC::INTEGER AS INTEGER);
+
+ALTER TABLE items
 DROP COLUMN price;
 
 ALTER TABLE items
-ADD COLUMN price INTEGER NOT NULL;
+RENAME COLUMN price_integer TO price;
+
+ALTER TABLE items
+ALTER COLUMN price SET NOT NULL;
