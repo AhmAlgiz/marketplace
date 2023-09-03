@@ -51,7 +51,19 @@ func (h *Handler) getItemById(c *gin.Context) {
 }
 
 func (h *Handler) getItemByTitle(c *gin.Context) {
+	title := c.Param("title")
+	if title == "" {
+		newErrorResponse(c, http.StatusBadRequest, "empty title parameter")
+	}
 
+	sl, err := h.services.GetItemByTitle(title)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+
+	c.JSON(http.StatusOK, getAllItemsResponse{
+		Data: sl,
+	})
 }
 
 func (h *Handler) getItemByUsername(c *gin.Context) {

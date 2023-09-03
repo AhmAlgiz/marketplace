@@ -16,7 +16,6 @@ func NewItemPostgres(db *sqlx.DB) *ItemPostgres {
 }
 
 func (r *ItemPostgres) CreateItem(input structures.Item) (int, error) {
-
 	//making SQL transaction
 	tx, err := r.db.Begin()
 	if err != nil {
@@ -39,7 +38,6 @@ func (r *ItemPostgres) CreateItem(input structures.Item) (int, error) {
 }
 
 func (r *ItemPostgres) GetItemById(id int) ([]structures.Item, error) {
-
 	query := fmt.Sprintf(
 		`SELECT * FROM %s WHERE id=$1`, itemsTable)
 
@@ -51,7 +49,14 @@ func (r *ItemPostgres) GetItemById(id int) ([]structures.Item, error) {
 }
 
 func (r *ItemPostgres) GetItemByTitle(title string) ([]structures.Item, error) {
-	return []structures.Item{}, nil
+	query := fmt.Sprintf(
+		`SELECT * FROM %s WHERE title=$1`, itemsTable)
+
+	var sl []structures.Item
+
+	err := r.db.Select(&sl, query, title)
+
+	return sl, err
 }
 
 func (r *ItemPostgres) GetItemByUsername(username string) ([]structures.Item, error) {
