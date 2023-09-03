@@ -37,3 +37,23 @@ func (r *ItemPostgres) CreateItem(input structures.Item) (int, error) {
 
 	return id, tx.Commit()
 }
+
+func (r *ItemPostgres) GetItemById(id int) ([]structures.Item, error) {
+
+	query := fmt.Sprintf(
+		`SELECT * FROM %s WHERE id=$1`, itemsTable)
+
+	var sl []structures.Item
+
+	err := r.db.Select(&sl, query, id)
+
+	return sl, err
+}
+
+func (r *ItemPostgres) GetItemByTitle(title string) ([]structures.Item, error) {
+	return []structures.Item{}, nil
+}
+
+func (r *ItemPostgres) GetItemByUsername(username string) ([]structures.Item, error) {
+	return []structures.Item{}, nil
+}

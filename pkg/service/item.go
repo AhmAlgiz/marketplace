@@ -16,3 +16,15 @@ func NewItemService(repo repository.Item) *ItemService {
 func (s *ItemService) CreateItem(input structures.Item) (int, error) {
 	return s.repo.CreateItem(input)
 }
+
+func (s *ItemService) GetItemById(id int) ([]structures.Item, error) {
+	return s.repo.GetItemById(id)
+}
+
+func (s *ItemService) GetItemByTitle(title string) ([]structures.Item, error) {
+	return s.repo.GetItemByTitle(title)
+}
+
+func (s *ItemService) GetItemByUsername(username string) ([]structures.Item, error) {
+	return s.repo.GetItemByUsername(username)
+}
