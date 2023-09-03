@@ -60,5 +60,12 @@ func (r *ItemPostgres) GetItemByTitle(title string) ([]structures.Item, error) {
 }
 
 func (r *ItemPostgres) GetItemByUsername(username string) ([]structures.Item, error) {
-	return []structures.Item{}, nil
+	query := fmt.Sprintf(
+		`SELECT it.id, it.title, it.description, it.price, it.user_id FROM %s it INNER JOIN %s ut ON it.user_id=ut.id WHERE ut.username=$1`, itemsTable, usersTable)
+
+	var sl []structures.Item
+
+	err := r.db.Select(&sl, query, username)
+
+	return sl, err
 }
