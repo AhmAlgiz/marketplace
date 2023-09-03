@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -72,7 +71,6 @@ func (h *Handler) getItemByUsername(c *gin.Context) {
 	if username == "" {
 		newErrorResponse(c, http.StatusBadRequest, "empty title parameter")
 	}
-	fmt.Print(username)
 
 	sl, err := h.services.GetItemByUsername(username)
 	if err != nil {
