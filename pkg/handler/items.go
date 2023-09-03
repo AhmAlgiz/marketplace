@@ -29,11 +29,11 @@ func (h *Handler) createItem(c *gin.Context) {
 	})
 }
 
-func (h *Handler) getAllItems(c *gin.Context) {
-
+func (h *Handler) getItemById(c *gin.Context) {
+	
 }
 
-func (h *Handler) getItemById(c *gin.Context) {
+func (h *Handler) getItemByUsername(c *gin.Context) {
 
 }
 
