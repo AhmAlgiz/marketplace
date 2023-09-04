@@ -28,3 +28,7 @@ func (s *ItemService) GetItemByTitle(title string) ([]structures.Item, error) {
 func (s *ItemService) GetItemByUsername(username string) ([]structures.Item, error) {
 	return s.repo.GetItemByUsername(username)
 }
+
+func (s *ItemService) DeleteItem(id, userId int) error {
+	return s.repo.DeleteItem(id, userId)
+}

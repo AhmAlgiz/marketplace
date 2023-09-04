@@ -12,6 +12,10 @@ type getAllItemsResponse struct {
 	Data []structures.Item `json:"data"`
 }
 
+type statusRespone struct {
+	Status bool `json:"status"`
+}
+
 func (h *Handler) createItem(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -69,7 +73,7 @@ func (h *Handler) getItemByTitle(c *gin.Context) {
 func (h *Handler) getItemByUsername(c *gin.Context) {
 	username := c.Param("username")
 	if username == "" {
-		newErrorResponse(c, http.StatusBadRequest, "empty title parameter")
+		newErrorResponse(c, http.StatusBadRequest, "empty username parameter")
 	}
 
 	sl, err := h.services.GetItemByUsername(username)
@@ -87,5 +91,20 @@ func (h *Handler) updateItem(c *gin.Context) {
 }
 
 func (h *Handler) deleteItem(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid item id parameter")
+	}
 
+	err = h.services.DeleteItem(id, userId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+	c.JSON(http.StatusOK, statusRespone{
+		Status: true,
+	})
 }

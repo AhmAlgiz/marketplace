@@ -69,3 +69,12 @@ func (r *ItemPostgres) GetItemByUsername(username string) ([]structures.Item, er
 
 	return sl, err
 }
+
+func (r *ItemPostgres) DeleteItem(id, userId int) error {
+	query := fmt.Sprintf(
+		`DELETE FROM %s it WHERE it.id=$1 AND it.user_id=$2 `, itemsTable)
+
+	_, err := r.db.Exec(query, id, userId)
+
+	return err
+}
