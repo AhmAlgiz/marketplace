@@ -12,6 +12,7 @@ type Auth interface {
 
 type Item interface {
 	CreateItem(input structures.Item) (int, error)
+	GetAllItems() ([]structures.Item, error)
 	GetItemById(id int) ([]structures.Item, error)
 	GetItemByTitle(title string) ([]structures.Item, error)
 	GetItemByUsername(username string) ([]structures.Item, error)

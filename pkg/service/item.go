@@ -32,3 +32,7 @@ func (s *ItemService) GetItemByUsername(username string) ([]structures.Item, err
 func (s *ItemService) DeleteItem(id, userId int) error {
 	return s.repo.DeleteItem(id, userId)
 }
+
+func (s *ItemService) GetAllItems() ([]structures.Item, error) {
+	return s.repo.GetAllItems()
+}

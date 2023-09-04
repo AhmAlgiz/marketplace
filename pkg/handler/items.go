@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type getAllItemsResponse struct {
+type getItemsResponse struct {
 	Data []structures.Item `json:"data"`
 }
 
@@ -38,6 +38,17 @@ func (h *Handler) createItem(c *gin.Context) {
 	})
 }
 
+func (h *Handler) getAllItems(c *gin.Context) {
+	sl, err := h.services.GetAllItems()
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+
+	c.JSON(http.StatusOK, getItemsResponse{
+		Data: sl,
+	})
+}
+
 func (h *Handler) getItemById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -49,7 +60,7 @@ func (h *Handler) getItemById(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
 
-	c.JSON(http.StatusOK, getAllItemsResponse{
+	c.JSON(http.StatusOK, getItemsResponse{
 		Data: sl,
 	})
 }
@@ -65,7 +76,7 @@ func (h *Handler) getItemByTitle(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
 
-	c.JSON(http.StatusOK, getAllItemsResponse{
+	c.JSON(http.StatusOK, getItemsResponse{
 		Data: sl,
 	})
 }
@@ -81,7 +92,7 @@ func (h *Handler) getItemByUsername(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
 
-	c.JSON(http.StatusOK, getAllItemsResponse{
+	c.JSON(http.StatusOK, getItemsResponse{
 		Data: sl,
 	})
 }

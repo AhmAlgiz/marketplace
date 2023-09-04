@@ -78,3 +78,14 @@ func (r *ItemPostgres) DeleteItem(id, userId int) error {
 
 	return err
 }
+
+func (r *ItemPostgres) GetAllItems() ([]structures.Item, error) {
+	query := fmt.Sprintf(
+		`SELECT * FROM %s`, itemsTable)
+
+	var sl []structures.Item
+
+	err := r.db.Select(&sl, query)
+
+	return sl, err
+}
