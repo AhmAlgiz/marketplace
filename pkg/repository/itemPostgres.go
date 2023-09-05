@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/AhmAlgiz/marketplace/structures"
 	"github.com/jmoiron/sqlx"
@@ -88,4 +89,37 @@ func (r *ItemPostgres) GetAllItems() ([]structures.Item, error) {
 	err := r.db.Select(&sl, query)
 
 	return sl, err
+}
+
+func (r *ItemPostgres) UpdateItem(input structures.UpdateItem, userId int) error {
+	setValues := make([]string, 0)
+	args := make([]interface{}, 0)
+	argId := 1
+
+	if input.Title != nil {
+		setValues = append(setValues, fmt.Sprintf("title=$%d", argId))
+		args = append(args, *input.Title)
+		argId++
+	}
+
+	if input.Description != nil {
+		setValues = append(setValues, fmt.Sprintf("description=$%d", argId))
+		args = append(args, *input.Description)
+		argId++
+	}
+
+	if input.Price != nil {
+		setValues = append(setValues, fmt.Sprintf("price=$%d", argId))
+		args = append(args, *input.Price)
+		argId++
+	}
+	args = append(args, userId)
+	args = append(args, input.Id)
+
+	setQuery := strings.Join(setValues, ", ")
+	query := fmt.Sprintf("UPDATE %s it SET %s WHERE it.user_id=$%d AND it.id=$%d", itemsTable, setQuery, argId, argId+1)
+
+	_, err := r.db.Exec(query, args...)
+
+	return err
 }

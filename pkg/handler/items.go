@@ -98,7 +98,23 @@ func (h *Handler) getItemByUsername(c *gin.Context) {
 }
 
 func (h *Handler) updateItem(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
+	var input structures.UpdateItem
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
 
+	if err := h.services.UpdateItem(input, userId); err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+
+	c.JSON(http.StatusOK, statusRespone{
+		Status: true,
+	})
 }
 
 func (h *Handler) deleteItem(c *gin.Context) {

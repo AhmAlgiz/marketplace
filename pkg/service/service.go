@@ -18,6 +18,7 @@ type Item interface {
 	GetItemByTitle(title string) ([]structures.Item, error)
 	GetItemByUsername(username string) ([]structures.Item, error)
 	DeleteItem(userId, id int) error
+	UpdateItem(input structures.UpdateItem, userId int) error
 }
 
 type Service struct {

@@ -36,3 +36,10 @@ func (s *ItemService) DeleteItem(id, userId int) error {
 func (s *ItemService) GetAllItems() ([]structures.Item, error) {
 	return s.repo.GetAllItems()
 }
+
+func (s *ItemService) UpdateItem(input structures.UpdateItem, userId int) error {
+	if err := input.Validate(); err != nil {
+		return err
+	}
+	return s.repo.UpdateItem(input, userId)
+}

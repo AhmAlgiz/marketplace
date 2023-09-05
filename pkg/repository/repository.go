@@ -17,6 +17,7 @@ type Item interface {
 	GetItemByTitle(title string) ([]structures.Item, error)
 	GetItemByUsername(username string) ([]structures.Item, error)
 	DeleteItem(id, userId int) error
+	UpdateItem(input structures.UpdateItem, userId int) error
 }
 
 type Repository struct {
