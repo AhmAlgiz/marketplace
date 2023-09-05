@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -119,7 +120,11 @@ func (r *ItemPostgres) UpdateItem(input structures.UpdateItem, userId int) error
 	setQuery := strings.Join(setValues, ", ")
 	query := fmt.Sprintf("UPDATE %s it SET %s WHERE it.user_id=$%d AND it.id=$%d", itemsTable, setQuery, argId, argId+1)
 
-	_, err := r.db.Exec(query, args...)
+	res, err := r.db.Exec(query, args...)
+
+	if v, _ := res.RowsAffected(); v == 0 {
+		err = errors.New("no rows affected")
+	}
 
 	return err
 }

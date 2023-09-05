@@ -33,7 +33,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			items.GET("/id/:id", h.getItemById)
 			items.GET("/username/:username", h.getItemByUsername)
 			items.GET("/title/:title", h.getItemByTitle)
-			items.PUT("/:id", h.updateItem)
+			items.PUT("/", h.updateItem)
 			items.DELETE("/:id", h.deleteItem)
 		}
 

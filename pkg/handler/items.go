@@ -110,6 +110,7 @@ func (h *Handler) updateItem(c *gin.Context) {
 
 	if err := h.services.UpdateItem(input, userId); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
 	}
 
 	c.JSON(http.StatusOK, statusRespone{
@@ -130,6 +131,7 @@ func (h *Handler) deleteItem(c *gin.Context) {
 	err = h.services.DeleteItem(id, userId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
 	}
 	c.JSON(http.StatusOK, statusRespone{
 		Status: true,
