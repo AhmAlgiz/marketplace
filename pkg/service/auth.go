@@ -28,6 +28,7 @@ type tokenClaims struct {
 func NewAuthService(repo repository.Auth) *AuthService {
 	return &AuthService{repo: repo}
 }
+
 func (s *AuthService) CreateUser(user structures.User) (int, error) {
 	user.Pass = s.generatePasswordHash(user.Pass)
 	return s.repo.CreateUser(user)

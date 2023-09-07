@@ -40,7 +40,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		users := api.Group("/users")
 		{
 			users.GET("/:id", h.getUserById)
-			users.PUT("/:id", h.updateUser)
+			users.PUT("/update/", h.updateUser)
 		}
 	}
 

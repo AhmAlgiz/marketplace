@@ -20,14 +20,20 @@ type Item interface {
 	UpdateItem(input structures.UpdateItem, userId int) error
 }
 
+type User interface {
+	UpdateUser(updateUser structures.UpdateUser, userId int) error
+}
+
 type Repository struct {
 	Auth
 	Item
+	User
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Auth: NewAuthPostgres(db),
 		Item: NewItemPostgres(db),
+		User: NewUserPostgres(db),
 	}
 }

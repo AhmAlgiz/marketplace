@@ -21,14 +21,20 @@ type Item interface {
 	UpdateItem(input structures.UpdateItem, userId int) error
 }
 
+type User interface {
+	UpdateUser(updateUser structures.UpdateUser, userId int) error
+}
+
 type Service struct {
 	Auth
 	Item
+	User
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Auth: NewAuthService(repos.Auth),
 		Item: NewItemService(repos.Item),
+		User: NewUserService(repos.User),
 	}
 }
