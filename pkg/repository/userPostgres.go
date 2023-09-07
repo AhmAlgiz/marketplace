@@ -22,3 +22,14 @@ func (r *UserPostgres) UpdateUser(updateUser structures.UpdateUser, userId int) 
 
 	return err
 }
+
+func (r *UserPostgres) GetUserById(id int) ([]structures.GetUser, error) {
+	query := fmt.Sprintf(
+		`SELECT id, username FROM %s WHERE id=$1`, usersTable)
+
+	var sl []structures.GetUser
+
+	err := r.db.Select(&sl, query, id)
+
+	return sl, err
+}

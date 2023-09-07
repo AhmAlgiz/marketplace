@@ -9,3 +9,8 @@ type User struct {
 type UpdateUser struct {
 	Name string `json:"username" binding:"required" db:"username"`
 }
+
+type GetUser struct {
+	Id   int    `json:"id" db:"id"`
+	Name string `json:"username" db:"username"`
+}

@@ -2,10 +2,15 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/AhmAlgiz/marketplace/structures"
 	"github.com/gin-gonic/gin"
 )
+
+type getUsersResponse struct {
+	Data []structures.GetUser `json:"data"`
+}
 
 func (h *Handler) updateUser(c *gin.Context) {
 	userId, err := getUserId(c)
@@ -30,5 +35,19 @@ func (h *Handler) updateUser(c *gin.Context) {
 }
 
 func (h *Handler) getUserById(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid user id parameter")
+		return
+	}
 
+	sl, err := h.services.GetUserById(id)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, getUsersResponse{
+		Data: sl,
+	})
 }

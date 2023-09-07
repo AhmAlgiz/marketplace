@@ -22,6 +22,7 @@ type Item interface {
 
 type User interface {
 	UpdateUser(updateUser structures.UpdateUser, userId int) error
+	GetUserById(id int) ([]structures.GetUser, error)
 }
 
 type Repository struct {

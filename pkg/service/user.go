@@ -16,3 +16,7 @@ func NewUserService(repo repository.User) *UserService {
 func (s *UserService) UpdateUser(updateUser structures.UpdateUser, userId int) error {
 	return s.repo.UpdateUser(updateUser, userId)
 }
+
+func (s *UserService) GetUserById(id int) ([]structures.GetUser, error) {
+	return s.repo.GetUserById(id)
+}
