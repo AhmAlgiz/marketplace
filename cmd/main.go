@@ -1,7 +1,10 @@
 package main
 
 import (
+	"context"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/AhmAlgiz/marketplace"
 	"github.com/AhmAlgiz/marketplace/pkg/handler"
@@ -42,8 +45,26 @@ func main() {
 	handlers := handler.NewHandler(services)
 
 	s := new(marketplace.Server)
-	if err := s.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
-		logrus.Fatalf("Server running error: %s", err.Error())
+	go func() {
+		if err := s.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+			logrus.Fatalf("Server running error: %s", err.Error())
+		}
+	}()
+
+	logrus.Print("Marketplace started.")
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	logrus.Print("Marketplace shutting down.")
+
+	if err := s.Shutdown(context.Background()); err != nil {
+		logrus.Errorf("Error shutting down: %s", err.Error())
+	}
+
+	if err := db.Close(); err != nil {
+		logrus.Errorf("Error closing database: %s", err.Error())
 	}
 }
 
