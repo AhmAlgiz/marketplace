@@ -24,3 +24,5 @@ go.work
 .env
 # vsc files
 .vscode/*
+#postgres files
+.database/*
